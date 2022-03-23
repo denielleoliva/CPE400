@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\CPEFTP",
+    "\\CPEFTP\\CPEFTP"
   ],
-  "SelectedNode": "\\C:\\Users\\denie\\Source\\Repos\\CPE400",
+  "SelectedNode": "\\CPEFTP\\CPEFTP\\SocketController.cs",
   "PreviewInSolutionExplorer": false
 }
