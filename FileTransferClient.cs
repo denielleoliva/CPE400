@@ -14,9 +14,16 @@ namespace FileTransferClient{
 			Console.WriteLine(args[0]);
 			Console.WriteLine(args[1]);
 
-			TcpClient client = new TcpClient("127.0.0.1", 1234);
-			Console.WriteLine("Connection established....");
+			try{
 
+				TcpClient client = new TcpClient("127.0.0.1", 1234);
+				Console.WriteLine("Connection established....");
+
+			}catch(Exception e){
+				Console.Write(e.Message);
+			}
+
+			
 			
 
 
