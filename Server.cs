@@ -11,7 +11,7 @@ namespace Server{
     class Program{
         static void Main(string[] args){
 
-            TcpListener listener = new TcpListener(IPAddress.Any, 1234);
+            TcpListener listener = new TcpListener(IPAddress.Any, 5050);
 
             listener.Start();
 
