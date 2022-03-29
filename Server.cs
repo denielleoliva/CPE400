@@ -46,6 +46,9 @@ namespace Server{
 
                     read = client.GetStream().Read(buffer, received, size);
                     received+=read;
+
+                    
+                    
                 }
 
                 using(FileStream fileStream = new FileStream(Path.GetFileName(fileName), FileMode.Create)){
