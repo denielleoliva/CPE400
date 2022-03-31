@@ -31,7 +31,7 @@ namespace FileTransferClient{
 
 				string[] filePaths = Directory.GetFiles(args[0]);
 
-				foreach(var fileName in filePaths){
+				foreach(var fileName in filePaths){//foreach 
 					string file = fileName.ToString();
 
 					bStream = File.ReadAllBytes(file);
