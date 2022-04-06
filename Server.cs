@@ -30,12 +30,14 @@ namespace Server{
 
                 string fileName = reader.ReadLine();
 
-                int len = Convert.ToInt32(fileSize);
+                int len = Int32.Parse(fileSize);
                 byte[] buffer = new byte[len];
                 int received = 0;
                 int read = 0;
                 int size = 1024;
                 int remaining = 0;
+
+                Console.WriteLine(len + " | " + received);
 
                 while(received<len){
                     remaining = len - received;
@@ -48,13 +50,18 @@ namespace Server{
                     received+=read;
 
                     
+
+                    
                     
                 }
+
+                Console.WriteLine("Ack...");
 
                 using(FileStream fileStream = new FileStream(Path.GetFileName(fileName), FileMode.Create)){
                     fileStream.Write(buffer, 0, buffer.Length);
                     fileStream.Flush();
                     fileStream.Close();
+
                 }
 
 

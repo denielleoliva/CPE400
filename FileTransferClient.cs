@@ -24,7 +24,7 @@ namespace FileTransferClient{
 
 			try{
 
-				TcpClient client = new TcpClient("127.0.0.1", 1234);
+				TcpClient client = new TcpClient("127.0.0.1", 5050);
 				Console.WriteLine("Connection established....");
 
 				StreamWriter sw = new StreamWriter(client.GetStream());
