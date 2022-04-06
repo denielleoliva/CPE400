@@ -8,7 +8,7 @@ mcs -out:output.exe file.cs
 mono output.exe
 mono output.exe filepath 5
 
-Ryan Do: Concurrency 
+Ryan Do: Concurrency (see bottom)
     (3-28 works for 1 file at a time now make it x files at a time)
 Jason do: checksum
 Denielle: figured out how to send 1 at a time
@@ -16,3 +16,9 @@ Denielle: figured out how to send 1 at a time
 buglist: 
 double client problem
 firewall problem? (maybe)
+
+concurrency thoughts
+====================
+1. make multiple of (TcpClient client = new TcpClient("127.0.0.1", 1234);) <= these in an array
+2. have a for loop that goes for file%connections + 1
+3. have each connection send a file in the list
