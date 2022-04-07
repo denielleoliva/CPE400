@@ -4,9 +4,9 @@
 
 how to run
 ==========
-mcs -out:output.exe file.cs 
+mcs -out:output.exe *file*.cs
 mono output.exe
-mono output.exe filepath 5
+mono output.exe *filepath* *#*
 
 Ryan Do: Concurrency (see bottom)
     (3-28 works for 1 file at a time now make it x files at a time)
