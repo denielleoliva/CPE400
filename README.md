@@ -22,3 +22,10 @@ concurrency thoughts
 1. make multiple of (TcpClient client = new TcpClient("127.0.0.1", 1234);) <= these in an array
 2. have a for loop that goes for file%connections + 1
 3. have each connection send a file in the list
+
+
+notes 4/7 - denielle:
+- basic functions work
+- file sending works
+- heck yeah this took too long
+- needs concurrency
