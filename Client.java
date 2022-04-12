@@ -24,7 +24,7 @@ public class Client{
 
             int openChannelCount = 0;
 
-            openChannelCount = concurrentSend("/home/deni/Documents/SP22/CPE400-1/test");
+            openChannelCount = concurrentSend(filePath);
 
             for(int i =0; i<openChannelCount; i++){
                 inStream.close();
