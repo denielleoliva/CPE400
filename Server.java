@@ -4,12 +4,14 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
 public class Server{
     
     private static DataOutputStream outStream = null;
     private static DataInputStream inStream = null;
 
     public static void main(String[] args){
+
 
         try(ServerSocket server = new ServerSocket(5000)){
             System.out.println("listening....");
@@ -20,6 +22,9 @@ public class Server{
 
             inStream = new DataInputStream(clientSocket.getInputStream());
             outStream = new DataOutputStream(clientSocket.getOutputStream());
+
+            
+
 
             receiveFile("NewFile1.txt");
             receiveFile("NewFile2.txt");

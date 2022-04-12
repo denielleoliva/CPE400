@@ -1,6 +1,9 @@
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.File;
 
 public class Client{
 
@@ -8,16 +11,24 @@ public class Client{
     private static DataInputStream inStream = null;
 
     public static void main(String[] args){
+        String filePath = args[0];
+        int packSize = Integer.parseInt(args[1]);
+
+        System.out.println(filePath + " | " + packSize);
+
+
         try(Socket socket = new Socket("localhost", 5000)){
 
             inStream = new DataInputStream(socket.getInputStream());
             outStream = new DataOutputStream(socket.getOutputStream());
 
-            sendFile("one.txt");
-            sendFile("two.txt");
+            int openChannelCount = 0;
 
-            inStream.close();
-            inStream.close();
+            openChannelCount = concurrentSend("/home/deni/Documents/SP22/CPE400-1/test");
+
+            for(int i =0; i<openChannelCount; i++){
+                inStream.close();
+            }
 
         }catch (Exception e){
             System.out.println(e.toString());
@@ -40,6 +51,25 @@ public class Client{
         }
 
         fileIn.close();
+    }
+
+    public static int concurrentSend(String path)throws Exception{
+        File dir = new File(path);
+
+        File[] filesInDir = dir.listFiles();
+
+        int count = 0;
+
+        if(filesInDir != null){
+            for(File child : filesInDir){
+                sendFile(child.getAbsolutePath());
+                count++;
+            }
+        }else{
+            System.out.println("Directory empty....");
+        }
+
+        return count;
     }
     
 }

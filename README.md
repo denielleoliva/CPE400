@@ -4,9 +4,10 @@
 
 how to run
 ==========
-mcs -out:output.exe *file*.cs
-mono output.exe
-mono output.exe *filepath* *#*
+javac Server.java
+javac Client.java //seperate terminals
+java Server  //first
+java Client $path $number of concurrent files //second
 
 Ryan Do: Concurrency (see bottom)
     (3-28 works for 1 file at a time now make it x files at a time)
@@ -29,3 +30,4 @@ notes 4/7 - denielle:
 - file sending works
 - heck yeah this took too long
 - needs concurrency
+- file path issues; can only send files withing current directory
