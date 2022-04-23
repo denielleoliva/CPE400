@@ -4,6 +4,7 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.File;
+import java.util.zip.Adler32;
 
 public class Client{
 
@@ -25,6 +26,9 @@ public class Client{
             int openChannelCount = 0;
 
             openChannelCount = concurrentSend(filePath);
+            //send file verification
+            //Checksum checksum = new Adler32();
+            //checksum.update(buffer, 0, len);
 
             for(int i =0; i<openChannelCount; i++){
                 inStream.close();

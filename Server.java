@@ -3,6 +3,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.zip.Adler32;
 
 
 public class Server{
@@ -28,6 +29,15 @@ public class Server{
 
             receiveFile("NewFile1.txt");
             receiveFile("NewFile2.txt");
+            //receive adler32 file verification named comparedChecksum
+            //Checksum checksum = new Adler32();
+            //checksum.update(buffer, 0, len);
+            /* 
+                if(checksum != comparedChecksum)
+                {
+                    System.out.println("Yo this file got fucked in transmission");
+                }
+            */
 
             inStream.close();
             inStream.close();
