@@ -4,8 +4,9 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.File;
+import java.math.*;
 
-public class Client{
+public class Client {
 
     private static DataOutputStream outStream = null;
     private static DataInputStream inStream = null;
@@ -24,7 +25,7 @@ public class Client{
 
             int openChannelCount = 0;
 
-            openChannelCount = concurrentSend(filePath);
+            openChannelCount = concurrentSend(filePath, packSize);
 
             for(int i =0; i<openChannelCount; i++){
                 inStream.close();
@@ -53,23 +54,44 @@ public class Client{
         fileIn.close();
     }
 
-    public static int concurrentSend(String path)throws Exception{
+    public static int concurrentSend(String path, int sendCount)throws Exception{
         File dir = new File(path);
 
         File[] filesInDir = dir.listFiles();
+        int fileCount = filesInDir.length;
 
-        int count = 0;
+        int temp = filesInDir.length%sendCount;
+        if (temp != 0)
+        {
+            temp = (fileCount / sendCount) + 1;
+        }
+        else {
+            temp = fileCount/sendCount;
+        }
+        int connections = temp;
+
+        int counter = 0;
 
         if(filesInDir != null){
-            for(File child : filesInDir){
-                sendFile(child.getAbsolutePath());
-                count++;
+            for(int i = 0; i<connections; i++)
+            {
+                System.out.println("Sending packet size: " + connections);
+                for(int j = 0; j < sendCount; j++)
+                {
+                    System.out.println("Sending file number: " + j);
+                    if(counter<fileCount){
+                        sendFile(filesInDir[counter].getAbsolutePath());
+                    }else{
+                        break;
+                    }
+                    counter++;
+                }
             }
         }else{
             System.out.println("Directory empty....");
         }
 
-        return count;
+        return connections;
     }
     
 }

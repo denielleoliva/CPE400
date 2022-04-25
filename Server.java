@@ -28,6 +28,9 @@ public class Server{
 
             receiveFile("NewFile1.txt");
             receiveFile("NewFile2.txt");
+            receiveFile("NewFile3.txt");
+            receiveFile("NewFile4.txt");
+            receiveFile("NewFile5.txt");
 
             inStream.close();
             inStream.close();
