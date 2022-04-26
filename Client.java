@@ -26,10 +26,24 @@ public class Client {
 
             int openChannelCount = 0;
 
+            File dir = new File(filePath);
+
+            File[] filesInDir = dir.listFiles();
+            int fileCount = filesInDir.length;
+
+            // FileWriter metaDataFile = new FileWriter("meta.txt");
+            // metaDataFile.write(fileCount);
+            // metaDataFile.close();
+
+            // sendFile("meta.txt");
+
+            outStream.writeInt(fileCount);;
+
+
             openChannelCount = concurrentSend(filePath, packSize);
             //send file verification
-            //Checksum checksum = new Adler32();
-            //checksum.update(buffer, 0, len);
+            // Checksum checksum = new Adler32();
+            // checksum.update(buffer, 0, len);
 
             for(int i =0; i<openChannelCount; i++){
                 inStream.close();
@@ -46,7 +60,9 @@ public class Client {
         File file = new File(path);
         FileInputStream fileIn = new FileInputStream(file);
 
+        outStream.writeUTF(file.getName());
         outStream.writeLong(file.length());
+
 
         byte[] buffer = new byte[4*1024];
 

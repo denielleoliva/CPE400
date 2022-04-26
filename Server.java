@@ -24,14 +24,15 @@ public class Server{
             inStream = new DataInputStream(clientSocket.getInputStream());
             outStream = new DataOutputStream(clientSocket.getOutputStream());
 
+            int files = inStream.readInt();
+
+            for(int i = 0; i<files; i++){
+                String fileName = inStream.readUTF();
+                receiveFile(fileName);
+            }
+
             
-
-
-            receiveFile("NewFile1.txt");
-            receiveFile("NewFile2.txt");
-            receiveFile("NewFile3.txt");
-            receiveFile("NewFile4.txt");
-            receiveFile("NewFile5.txt");
+            
             //receive adler32 file verification named comparedChecksum
             //Checksum checksum = new Adler32();
             //checksum.update(buffer, 0, len);
