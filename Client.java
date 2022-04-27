@@ -56,7 +56,6 @@ public class Client {
 
             // sendFile("meta.txt");
 
-            // ***There was an extra semicolon here, deleted it bc i think it was a typo***
             outStream.writeInt(fileCount);
             
             // Sets how many channels we have as well as run the file transfer through concurrentSend
@@ -74,6 +73,7 @@ public class Client {
     }
 
     // sendFile function
+    // Opens up the input and output files to transfer data between the two
     private static void sendFile(String path) throws Exception{
         
         // Variable and file input and output declaration
@@ -99,13 +99,19 @@ public class Client {
         fileIn.close();
     }
 
+    // sendAdler32 Function
+    // Creates a checksum for the file
     private static void sendAdler32(byte[] buffer)
     {
+        // Checksum variable declaration
         Checksum checksum = new Adler32();
         checksum.update(buffer);
+        
+        // Grabs a checksum for the file
         try{
             outStream.writeLong(checksum.getValue());
         }
+        // Error catch to prevent bugs if response was not expected
         catch(Exception e)
         {
             e.printStackTrace();
@@ -113,6 +119,8 @@ public class Client {
     }
 
     // ConcurrentSend function
+    // Opens the file directory that we are sending from to calculate how many files we are sending within a packet and how many connections we will need
+    // It will then concurrently send files in packets until all of the files are transferred
     public static int concurrentSend(String path, int sendCount)throws Exception{
         
         // Variable declaration and file directory declaration
