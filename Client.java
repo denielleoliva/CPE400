@@ -10,6 +10,7 @@ import java.util.zip.Checksum;
 
 public class Client {
 
+    // File output and input variable declaration
     private static DataOutputStream outStream = null;
     private static DataInputStream inStream = null;
 
@@ -38,16 +39,14 @@ public class Client {
         // Prints out file path as well as concurrency file transfer size
         System.out.println(filePath + " | " + packSize);
 
-
+        // Try localhost port for file transfer
         try(Socket socket = new Socket("localhost", 5000)){
 
+            // Variable and file declarations
             inStream = new DataInputStream(socket.getInputStream());
             outStream = new DataOutputStream(socket.getOutputStream());
 
-            int openChannelCount = 0;
-
             File dir = new File(filePath);
-
             File[] filesInDir = dir.listFiles();
             int fileCount = filesInDir.length;
 
@@ -57,16 +56,18 @@ public class Client {
 
             // sendFile("meta.txt");
 
-            outStream.writeInt(fileCount);;
-
-
-            openChannelCount = concurrentSend(filePath, packSize);
+            // ***There was an extra semicolon here, deleted it bc i think it was a typo***
+            outStream.writeInt(fileCount);
             
-
+            // Sets how many channels we have as well as run the file transfer through concurrentSend
+            int openChannelCount = concurrentSend(filePath, packSize);
+            
+            // Closes the channels
             for(int i =0; i<openChannelCount; i++){
                 inStream.close();
             }
 
+        // Exception error message
         }catch (Exception e){
             System.out.println(e.toString());
         }
