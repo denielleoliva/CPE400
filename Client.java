@@ -78,9 +78,10 @@ public class Client {
     // Opens up the input and output files to send data to the server
     private static void sendFile(String path) throws Exception{
         
-        // Variable and file input and output declaration
+        // Variable declaration
         int bytes = 0;
 
+        // File input and output variable declaration
         File file = new File(path);
         FileInputStream fileIn = new FileInputStream(file);
 
@@ -101,7 +102,7 @@ public class Client {
         fileIn.close();
     }
 
-    // sendAdler32 Function
+    // sendAdler32 function
     // Creates a checksum for the file
     private static void sendAdler32(byte[] buffer)
     {
@@ -125,9 +126,10 @@ public class Client {
     // It will then concurrently send files in packets until all of the files are transferred
     public static int concurrentSend(String path, int sendCount)throws Exception{
         
-        // Variable declaration and file directory declaration
+        // Variable declaration
         int counter = 0;
         
+        // File directory variable declaration
         File dir = new File(path);
         
         File[] filesInDir = dir.listFiles();
