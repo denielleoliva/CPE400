@@ -8,6 +8,7 @@ import java.math.*;
 import java.util.zip.Adler32;
 import java.util.zip.Checksum;
 
+// Client public class declaration
 public class Client {
 
     // File output and input variable declaration
