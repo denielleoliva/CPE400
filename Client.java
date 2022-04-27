@@ -1,4 +1,4 @@
-
+// Java import statements
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -13,10 +13,29 @@ public class Client {
     private static DataOutputStream outStream = null;
     private static DataInputStream inStream = null;
 
+    // Client main function
     public static void main(String[] args){
-        String filePath = args[0];
-        int packSize = Integer.parseInt(args[1]);
 
+        // Variable declaration
+        String filePath = args[0];
+        int packSize = 0;
+
+        // Ensures that the number of concurrency file transfers is between 0 and 10
+        if (Integer.parseInt(args[1]) < 11 && Integer.parseInt(args[1]) > 0){
+            packSize = Integer.parseInt(args[1]);
+        }
+        // If concurrency file is not specified, set packSize to 1
+        else if(args.length == 1){
+            packSize = 1;
+        }
+        // Prints error message if the number concurrency file tranfers is not within acceptable values
+        else{
+            System.out.println("Error: Concurrency file transfers must be between 0 and 10");
+            System.exit(0);
+        }
+
+
+        // Prints out file path as well as concurrency file transfer size
         System.out.println(filePath + " | " + packSize);
 
 
