@@ -9,6 +9,7 @@ import java.util.zip.Adler32;
 import java.util.zip.Checksum;
 
 // Client public class declaration
+// Contains all the code for the client and can be compiled alongside the server to run a concurrent file transfer
 public class Client {
 
     // File output and input variable declaration
