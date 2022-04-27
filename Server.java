@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.zip.Adler32;
+import java.util.zip.Checksum;
 
 
 public class Server{
@@ -31,17 +32,6 @@ public class Server{
                 receiveFile(fileName);
             }
 
-            
-            
-            //receive adler32 file verification named comparedChecksum
-            //Checksum checksum = new Adler32();
-            //checksum.update(buffer, 0, len);
-            /* 
-                if(checksum != comparedChecksum)
-                {
-                    System.out.println("Yo this file got fucked in transmission");
-                }
-            */
 
             inStream.close();
             inStream.close();
@@ -63,13 +53,41 @@ public class Server{
 
         long size = inStream.readLong();
         byte[] buffer = new byte[4*1024];
+        Checksum checksum = new Adler32();
+        Checksum compChecksum = new Adler32();
 
         while(size > 0 && (bytes = inStream.read(buffer, 0, (int)Math.min(buffer.length, size))) != -1){
             fileOut.write(buffer, 0, bytes);
             size -= bytes;
+            receiveAdler(buffer);
         }
 
         fileOut.close();
     }
 
+    private static void receiveAdler(byte[] buffer)
+    {
+        Checksum currentChecksum = new Adler32();
+
+        try 
+        {
+            long originalChecksum = inStream.readLong();//this is the original checksum 
+            currentChecksum.update(buffer);
+            if(currentChecksum.getValue() == originalChecksum)
+            {
+                System.out.println(originalChecksum);
+                System.out.println(currentChecksum.getValue());
+                System.out.println("Verification complete: file integrity secure");
+            }
+            else
+                System.out.println("Verification complete: file integrity compromised");
+            }
+          catch(IOException e) 
+        {
+            e.printStackTrace();
+        }
+          
+        
+        
+    }
 }

@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.io.File;
 import java.math.*;
 import java.util.zip.Adler32;
+import java.util.zip.Checksum;
 
 public class Client {
 
@@ -41,9 +42,7 @@ public class Client {
 
 
             openChannelCount = concurrentSend(filePath, packSize);
-            //send file verification
-            // Checksum checksum = new Adler32();
-            // checksum.update(buffer, 0, len);
+            
 
             for(int i =0; i<openChannelCount; i++){
                 inStream.close();
@@ -69,9 +68,23 @@ public class Client {
         while((bytes=fileIn.read(buffer))!=-1){
             outStream.write(buffer, 0, bytes);
             outStream.flush();
+            sendAdler32(buffer);
         }
 
         fileIn.close();
+    }
+
+    private static void sendAdler32(byte[] buffer)
+    {
+        Checksum checksum = new Adler32();
+        checksum.update(buffer);
+        try{
+            outStream.writeLong(checksum.getValue());
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public static int concurrentSend(String path, int sendCount)throws Exception{
