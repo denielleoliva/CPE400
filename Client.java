@@ -73,7 +73,10 @@ public class Client {
         }
     }
 
+    // sendFile function
     private static void sendFile(String path) throws Exception{
+        
+        // Variable and file input and output declaration
         int bytes = 0;
 
         File file = new File(path);
@@ -82,15 +85,17 @@ public class Client {
         outStream.writeUTF(file.getName());
         outStream.writeLong(file.length());
 
-
+        // Sets buffer
         byte[] buffer = new byte[4*1024];
 
+        // While the buffer is not hit, transfer file contents
         while((bytes=fileIn.read(buffer))!=-1){
             outStream.write(buffer, 0, bytes);
             outStream.flush();
             sendAdler32(buffer);
         }
 
+        // Closes file
         fileIn.close();
     }
 
@@ -107,13 +112,21 @@ public class Client {
         }
     }
 
+    // ConcurrentSend function
     public static int concurrentSend(String path, int sendCount)throws Exception{
+        
+        // Variable declaration and file directory declaration
+        int counter = 0;
+        
         File dir = new File(path);
-
+        
         File[] filesInDir = dir.listFiles();
         int fileCount = filesInDir.length;
 
+        // Sets number of files in directory to temp for manipulation
         int temp = filesInDir.length%sendCount;
+        
+        // Calculate how many connections we should use for the file transfers
         if (temp != 0)
         {
             temp = (fileCount / sendCount) + 1;
@@ -121,10 +134,11 @@ public class Client {
         else {
             temp = fileCount/sendCount;
         }
+        
+        // Sets the number of connections
         int connections = temp;
 
-        int counter = 0;
-
+        // Transfers files in packets until all the files are transferred
         if(filesInDir != null){
             for(int i = 0; i<connections; i++)
             {
@@ -140,10 +154,12 @@ public class Client {
                     counter++;
                 }
             }
+        // If there are no files detected, print error message
         }else{
             System.out.println("Directory empty....");
         }
 
+        // Return the number of connections used for the file transfer
         return connections;
     }
     
