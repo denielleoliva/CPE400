@@ -75,7 +75,7 @@ public class Client {
     }
 
     // sendFile function
-    // Opens up the input and output files to transfer data between the two
+    // Opens up the input and output files to send data to the server
     private static void sendFile(String path) throws Exception{
         
         // Variable and file input and output declaration
