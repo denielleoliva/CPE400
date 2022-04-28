@@ -20,20 +20,28 @@ public class Client {
     public static void main(String[] args){
 
         // Variable declaration
-        String filePath = args[0];
+        String filePath = "";
         int packSize = 0;
 
+        // If file path is not specified, print error message
+        if(args.length == 0){
+            System.out.println("Error: source folder path not provided");
+            System.exit(0);            
+        }
+        // If file path and concurrency file are specified, set them to the user specified value
+        // Ensures that the number of concurrency file transfers is between 0 and 10
+        else if(args.length == 2 && Integer.parseInt(args[1]) < 11 && Integer.parseInt(args[1]) > 0){
+            filePath = args[0];
+            packSize = Integer.parseInt(args[1]);
+        }
         // If concurrency file is not specified, set packSize to 1
         if(args.length == 1){
+            filePath = args[0];
             packSize = 1;
-        }
-        // Ensures that the number of concurrency file transfers is between 0 and 10
-        else if (Integer.parseInt(args[1]) < 11 && Integer.parseInt(args[1]) > 0){
-            packSize = Integer.parseInt(args[1]);
         }
         // Prints error message if the number concurrency file tranfers is not within acceptable values
         else{
-            System.out.println("Error: Concurrency file transfers must be between 0 and 10");
+            System.out.println("Error: concurrency file transfers must be between 0 and 10");
             System.exit(0);
         }
 
