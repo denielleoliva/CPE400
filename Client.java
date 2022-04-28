@@ -23,13 +23,13 @@ public class Client {
         String filePath = args[0];
         int packSize = 0;
 
-        // Ensures that the number of concurrency file transfers is between 0 and 10
-        if (Integer.parseInt(args[1]) < 11 && Integer.parseInt(args[1]) > 0){
-            packSize = Integer.parseInt(args[1]);
-        }
         // If concurrency file is not specified, set packSize to 1
-        else if(args.length == 1){
+        if(args.length == 1){
             packSize = 1;
+        }
+        // Ensures that the number of concurrency file transfers is between 0 and 10
+        else if (Integer.parseInt(args[1]) < 11 && Integer.parseInt(args[1]) > 0){
+            packSize = Integer.parseInt(args[1]);
         }
         // Prints error message if the number concurrency file tranfers is not within acceptable values
         else{
@@ -108,7 +108,7 @@ public class Client {
     {
         // Checksum variable declaration
         Checksum checksum = new Adler32();
-        checksum.update(buffer);
+        checksum.update(buffer, 0, buffer.length);
         
         // Grabs a checksum for the file
         try{
