@@ -28,16 +28,16 @@ public class Client {
             System.out.println("Error: source folder path not provided");
             System.exit(0);            
         }
+        // If concurrency file is not specified, set packSize to 1
+        if(args.length == 1){
+            filePath = args[0];
+            packSize = 1;
+        }        
         // If file path and concurrency file are specified, set them to the user specified value
         // Ensures that the number of concurrency file transfers is between 0 and 10
         else if(args.length == 2 && Integer.parseInt(args[1]) < 11 && Integer.parseInt(args[1]) > 0){
             filePath = args[0];
             packSize = Integer.parseInt(args[1]);
-        }
-        // If concurrency file is not specified, set packSize to 1
-        if(args.length == 1){
-            filePath = args[0];
-            packSize = 1;
         }
         // Prints error message if the number concurrency file tranfers is not within acceptable values
         else{
@@ -136,6 +136,7 @@ public class Client {
         
         // Variable declaration
         int counter = 0;
+        int connections = 0;
         
         // File directory variable declaration
         File dir = new File(path);
@@ -143,29 +144,29 @@ public class Client {
         File[] filesInDir = dir.listFiles();
         int fileCount = filesInDir.length;
 
-        // Sets number of files in directory to temp for manipulation
+        // Sets temp with the modulo of files in directory and concurrency file transfer rate for manipulation and comparison
         int temp = filesInDir.length%sendCount;
+
+        // Sets temp2 with the files in directory divided by the concurrency file transfer rate for manipulation and comparison
+        int temp2 = filesInDir.length/sendCount;
         
         // Calculate how many connections we should use for the file transfers
-        if (temp != 0)
+        if (temp != 0 && temp2 == 0)
         {
-            temp = (fileCount / sendCount) + 1;
+            connections = filesInDir.length;
         }
         else {
-            temp = fileCount/sendCount;
+            connections = sendCount;
         }
-        
-        // Sets the number of connections
-        int connections = temp;
 
         // Transfers files in packets until all the files are transferred
-        if(filesInDir != null){
-            for(int i = 0; i<connections; i++)
-            {
-                System.out.println("Sending packet size: " + connections);
-                for(int j = 0; j < sendCount; j++)
+        for(int i = 0; i<= temp2; i++)
+        {
+            if(filesInDir != null && counter <= fileCount){
+                System.out.println("Sending packet number: " + (i + 1));
+                for(int j = 0; j < connections; j++)
                 {
-                    System.out.println("Sending file number: " + j);
+                    System.out.println("Sending file number: " + (counter + 1));
                     if(counter<fileCount){
                         sendFile(filesInDir[counter].getAbsolutePath());
                     }else{
@@ -174,9 +175,11 @@ public class Client {
                     counter++;
                 }
             }
-        // If there are no files detected, print error message
-        }else{
-            System.out.println("Directory empty....");
+            // If there are no files detected, print error message
+            else{
+            System.out.println("Directory emptied");
+            System.exit(0);
+            }
         }
 
         // Return the number of connections used for the file transfer
