@@ -97,7 +97,7 @@ public class Server{
         try 
         {
             long originalChecksum = inStream.readLong(); //this is the original checksum 
-            currentChecksum.update(buffer);
+            currentChecksum.update(buffer, 0, buffer.length);
             
             // If checksums match, print that the file's integrity is secure
             if(currentChecksum.getValue() == originalChecksum)
