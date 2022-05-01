@@ -41,12 +41,12 @@ public class Client {
         }
         // Prints error message if the arguments exceed 3
         else if(args.length >= 3){
-            System.out.println("Error: Number of arguments exceed 2");
+            System.out.println("Error: number of arguments exceed 2");
             System.exit(0);            
         }
         // Prints error message if the number concurrency file tranfers is not within acceptable values
         else{
-            System.out.println("Error: concurrency file transfers must be between 0 and 10");
+            System.out.println("Error: concurrency file transfers must be between 1 and 10");
             System.exit(0);
         }
 
