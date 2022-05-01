@@ -16,7 +16,7 @@ public class Server{
     // Client main function
     public static void main(String[] args){
 
-        // 
+        // Try port for file transfer
         try(ServerSocket server = new ServerSocket(5000)){
             
             // Prints message that informs the user that the program is listening for the client
