@@ -165,7 +165,7 @@ public class Client {
         }
 
         // Transfers files in packets until all the files are transferred
-        for(int i = 0; i<= temp2; i++)
+        for(int i = 0; i< temp2; i++)
         {
             if(filesInDir != null && counter <= fileCount){
                 System.out.println("Sending packet number: " + (i + 1));
