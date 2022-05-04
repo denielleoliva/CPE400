@@ -46,7 +46,7 @@ public class Client {
         }
         // Prints error message if the number concurrency file tranfers is not within acceptable values
         else{
-            System.out.println("Error: concurrency file transfers must be between 1 and 10");
+            System.out.println("Error: concurrency file size transfers must be between 1 and 10");
             System.exit(0);
         }
 
