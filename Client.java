@@ -154,6 +154,9 @@ public class Client {
 
         // Sets temp2 with the files in directory divided by the concurrency file transfer rate for manipulation and comparison
         int temp2 = filesInDir.length/sendCount;
+
+        // Sets temp3 with the files in direcotry divided by the concurrency file transfer rate for manipulation and comparison
+        double temp3 = filesInDir.length/(Double.valueOf(sendCount));
         
         // Calculate how many connections we should use for the file transfers
         if (temp != 0 && temp2 == 0)
@@ -165,27 +168,55 @@ public class Client {
         }
 
         // Transfers files in packets until all the files are transferred
-        for(int i = 0; i <= temp2; i++)
+        if (temp != 0 && temp2 != temp3)
         {
-            if(filesInDir != null && counter <= fileCount){
-                System.out.println("Sending packet number: " + (i + 1));
-                for(int j = 0; j < connections; j++)
-                {
-                    if(counter<fileCount){
-                        System.out.println("Sending file number: " + (counter + 1));
-                        sendFile(filesInDir[counter].getAbsolutePath());
-                    }else{
-                        break;
+            for(int i = 0; i <= temp2; i++)
+            {
+                if(filesInDir != null && counter < fileCount){
+                    System.out.println("Sending packet number: " + (i + 1));
+                    for(int j = 0; j < connections; j++)
+                    {
+                        if(counter<fileCount){
+                            System.out.println("Sending file number: " + (counter + 1));
+                            sendFile(filesInDir[counter].getAbsolutePath());
+                        }else{
+                            break;
+                        }
+                        counter++;
                     }
-                    counter++;
+                }
+                // If there are no files detected, print error message
+                else{
+                System.out.println("Directory emptied");
+                System.exit(0);
                 }
             }
-            // If there are no files detected, print error message
-            else{
-            System.out.println("Directory emptied");
-            System.exit(0);
-            }
         }
+        else
+        {
+            for(int i = 0; i < temp2; i++)
+            {
+                if(filesInDir != null && counter < fileCount){
+                    System.out.println("Sending packet number: " + (i + 1));
+                    for(int j = 0; j < connections; j++)
+                    {
+                        if(counter<fileCount){
+                            System.out.println("Sending file number: " + (counter + 1));
+                            sendFile(filesInDir[counter].getAbsolutePath());
+                        }else{
+                            break;
+                        }
+                        counter++;
+                    }
+                }
+                // If there are no files detected, print error message
+                else{
+                System.out.println("Directory emptied");
+                System.exit(0);
+                }
+            }            
+        }
+
 
         // Return the number of connections used for the file transfer
         return connections;
