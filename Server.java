@@ -4,6 +4,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.zip.Adler32;
 import java.util.zip.Checksum;
+import java.util.concurrent.TimeUnit;
 
 // Server public class declaration
 // Contains all the code for the server and can be compiled alongside the client to run a concurrent file transfer
@@ -18,6 +19,11 @@ public class Server{
 
         // Try port for file transfer
         try(ServerSocket server = new ServerSocket(5000)){
+
+            // Time variable declaration
+            double startTime = 0;
+            double endTime = 0;
+            double time = 0;
             
             // Prints message that informs the user that the program is listening for the client
             System.out.println("listening....");
@@ -26,6 +32,9 @@ public class Server{
             // Informs the user that a connection was established with a client
             System.out.println("connection established....");
             System.out.println(clientSocket+" connected");
+
+            // Runs timer until the file transfer is complete, then it will output the time
+            startTime = System.currentTimeMillis(); 
 
             // File input and output variable declaration based on the client
             inStream = new DataInputStream(clientSocket.getInputStream());
@@ -46,6 +55,15 @@ public class Server{
 
             // Closes socket
             clientSocket.close();
+
+            // Sets the end time
+            endTime = System.currentTimeMillis();
+
+            // Calculates the amount of time that the file transfer took in seconds
+            time = (endTime - startTime)/1000;
+
+            // Informs the user of the amount of time in seconds it took for the file transfer to complete
+            System.out.println("The file transfer took "+ time +" seconds to complete.");
 
 
         // Error catch to prevent bugs if response was not expected       
